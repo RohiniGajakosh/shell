@@ -1,7 +1,8 @@
 #!/bin/bash
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 installed_tools=("terraform" "docker" "aws" "gitlab-runner" "jenkins" "ansible")
 EMAIL_TO="aaira8665@gmail.com"
-TEMPLATE_FILE="email_template.html"
+TEMPLATE_FILE="$SCRIPT_DIR/email_template.html"
 TEMP_EMAIL="/tmp/version_report.html"
 
 for tool in "${installed_tools[@]}"; do
@@ -37,13 +38,22 @@ for tool in "${installed_tools[@]}"; do
         echo "Latest version of $tool: $latest_version"
         
         if [ "$current_version" != "$latest_version" ]; then
+            CURRENT_DATE=$(date '+%Y-%m-%d %H:%M:%S')
             sed -e "s/{{TOOL}}/$tool/g" \
                 -e "s/{{CURRENT_VERSION}}/$current_version/g" \
                 -e "s/{{LATEST_VERSION}}/$latest_version/g" \
-                -e "s/{{DATE}}/$(date '+%Y-%m-%d %H:%M:%S')/g" \
+                -e "s/{{DATE}}/$CURRENT_DATE/g" \
                 "$TEMPLATE_FILE" > "$TEMP_EMAIL"
             
-            mail -s "$(echo -e "$tool Update Available\nContent-Type: text/html")" "$EMAIL_TO" < "$TEMP_EMAIL"
+            (
+                echo "To: $EMAIL_TO"
+                echo "From: $EMAIL_TO"
+                echo "Subject: $tool Update Available"
+                echo "Content-Type: text/html; charset=UTF-8"
+                echo ""
+                cat "$TEMP_EMAIL"
+            ) | msmtp "$EMAIL_TO"
+            
             echo "Email sent for $tool update"
         fi
         echo "-----------------------------"
