@@ -27,11 +27,11 @@ for tool in "${installed_tools[@]}"; do
                 ;;
             jenkins)
                 current_version=$(jenkins --version)
-                latest_version=$(curl -s ${latest_versions["jenkins"]} | jq -r '.tag_name' | sed 's/v//')
+                latest_version=$(curl -s https://updates.jenkins.io/stable/latestCore.txt | jq -r .tag_name | sed 's/v//')
                 ;;
             ansible)
                 current_version=$(ansible --version | head -n 1 | awk '{print $2}')
-                latest_version=$(curl -s ${latest_versions["ansible"]} | jq -r '.tag_name' | sed 's/v//')
+                latest_version=$(curl -s https://pypi.org/pypi/ansible/json | jq -r .info.version | sed 's/v//')
                 ;;
         esac
         echo "Current version of $tool: $current_version"
