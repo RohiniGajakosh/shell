@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { background-color: #ffffff; border-radius: 8px; padding: 30px; max-width: 600px; margin: 0 auto; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .header { background-color: #ff9900; color: white; padding: 20px; border-radius: 8px 8px 0 0; margin: -30px -30px 20px -30px; }
+        h1 { margin: 0; font-size: 24px; }
+        .alert { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; }
+        .version-info { background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0; }
+        .version-row { display: flex; justify-content: space-between; margin: 10px 0; }
+        .label { font-weight: bold; color: #555; }
+        .value { color: #333; }
+        .current { color: #dc3545; }
+        .latest { color: #28a745; }
+        .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #777; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔔 Tool Update Notification</h1>
+        </div>
+        
+        <div class="alert">
+            <strong>⚠️ Update Available!</strong> A new version of <strong>{{TOOL}}</strong> is available.
+        </div>
+        
+        <div class="version-info">
+            <div class="version-row">
+                <span class="label">Tool:</span>
+                <span class="value"><strong>{{TOOL}}</strong></span>
+            </div>
+            <div class="version-row">
+                <span class="label">Current Version:</span>
+                <span class="value current">{{CURRENT_VERSION}}</span>
+            </div>
+            <div class="version-row">
+                <span class="label">Latest Version:</span>
+                <span class="value latest">{{LATEST_VERSION}}</span>
+            </div>
+            <div class="version-row">
+                <span class="label">Checked On:</span>
+                <span class="value">{{DATE}}</span>
+            </div>
+        </div>
+        
+        <p>Please consider updating to the latest version to benefit from new features, improvements, and security patches.</p>
+        
+        <div class="footer">
+            <p>This is an automated notification from your version monitoring system.</p>
+        </div>
+    </div>
+</body>
+</html>
